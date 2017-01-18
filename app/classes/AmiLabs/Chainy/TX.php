@@ -167,6 +167,7 @@ class TX extends \AmiLabs\CryptoKit\TX {
      * @return string
      */
     public static function createHashTransaction($text){
+        $text = str_replace("\r", "" , $text);
         $data = self::_getTxData(self::TX_TYPE_HASH, array('hash' => hash("sha256", $text)));
         return array('data' => $data);
     }

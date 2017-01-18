@@ -221,6 +221,9 @@ var App = function() {
     $(document).on("click", "#checkhash", function(){
         var text = $('#checkhash-text').val();
         var hash = CryptoJS.SHA256(text).toString();
+        if(!checkHash(hash)){
+            hash = CryptoJS.SHA256(text.replace(/([^\r])\n/g, '$1\r\n')).toString();
+        }
         verifyHash(hash);
     });
 
@@ -371,9 +374,13 @@ var App = function() {
     };
 }();
 
-function verifyHash(hash){
+function checkHash(hash){
     var storedHash = $('#file-hash').val();
-    if(hash === storedHash){
+    return (hash === storedHash);
+}
+
+function verifyHash(hash){
+    if(checkHash(hash)){
         alert('Verification successed!');
         console.log(hash + ' == ' + storedHash);
     }else{
