@@ -169,7 +169,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-2 col-header">Text:</div>
                             <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                                <textarea name="description" class="check-empty check-description"></textarea>
+                                <textarea name="description" class="trim-on-submit check-empty check-description"></textarea>
                                 <div class="form-errors text-danger"></div>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-2 col-header">Data:</div>
                             <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                                <textarea name="description" class="check-empty check-description"></textarea>
+                                <textarea name="description" class="trim-on-submit check-empty"></textarea>
                                 <div class="form-errors text-danger"></div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-2 col-header">Text:</div>
                         <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                            <textarea id="enc-text" class="check-empty check-description"></textarea>
+                            <textarea id="enc-text" class="trim-on-submit check-empty check-description"></textarea>
                             <div class="form-errors text-danger"></div>
                         </div>
                     </div>
@@ -265,7 +265,8 @@ var isDapp = function(){
 function submitAdd(){
     $('#captcha-err').text('');
     $('.trim-on-submit:visible').each(function(){
-        this.value = this.value.replace(/^\s+/, '').replace(/\s+$/, '');
+        // Trims spaces and blank lines
+        this.value = this.value.replace(/^\s*[\r\n]/gm, "").replace(/\s*[\r\n]$/, '');
     });
     var checked = true;
     $('.check-url:visible').each(function(){

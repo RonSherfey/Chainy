@@ -219,8 +219,14 @@ var App = function() {
     }
 
     $(document).on("click", "#checkhash", function(){
-        var text = $('#checkhash-text').val();
         var hash = CryptoJS.SHA256(text).toString();
+        var text = $('#checkhash-text').val();
+
+        // Trimming was added on ts 1484729572
+        if(parseInt($(".ts2date").attr("data-ts")) > 1484729572){
+            text = text.replace(/^\s*[\r\n]/gm, "").replace(/\s*[\r\n]$/, '');
+        }
+
         if(!checkHash(hash)){
             hash = CryptoJS.SHA256(text.replace(/([^\r])\n/g, '$1\r\n')).toString();
         }
