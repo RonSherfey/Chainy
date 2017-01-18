@@ -266,7 +266,7 @@ function submitAdd(){
     $('#captcha-err').text('');
     $('.trim-on-submit:visible').each(function(){
         // Trims spaces and blank lines
-        this.value = this.value.replace(/^\s*[\r\n]/gm, "").replace(/\s*[\r\n]$/, '');
+        this.value = this.value.replace(/^\s*[\r\n]/gm, "").replace(/\s*[\r\n]$/, '').replace(/^s+/, '').replace(/s+$/, '');;
     });
     var checked = true;
     $('.check-url:visible').each(function(){
