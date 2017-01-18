@@ -376,16 +376,20 @@ var App = function() {
 
 function checkHash(hash){
     var storedHash = $('#file-hash').val();
-    return (hash === storedHash);
+    var result = (hash === storedHash);
+    if(result){
+        console.log(hash + ' == ' + storedHash);
+    }else{
+        console.log(hash + ' != ' + storedHash);
+    }
+    return result;
 }
 
 function verifyHash(hash){
     if(checkHash(hash)){
         alert('Verification successed!');
-        console.log(hash + ' == ' + storedHash);
     }else{
         alert('Verification failed!');
-        console.log(hash + ' != ' + storedHash);
     }
 }
 
