@@ -184,7 +184,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-2 col-header">Data:</div>
                             <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                                <textarea name="description" class="trim-on-submit check-empty"></textarea>
+                                <textarea name="description" class="trim-on-submit check-empty" style="width:100%; height: 150px;"></textarea>
                                 <div class="form-errors text-danger"></div>
                             </div>
                         </div>
