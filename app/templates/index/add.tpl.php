@@ -161,8 +161,8 @@
             </div>
         <?php else: ?>
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#local-filehash" id="firstTab">Local File Hash</a></li>
-                <li><a data-toggle="tab" href="#remote-filehash">Remote File Hash</a></li>
+                <li class="active"><a data-toggle="tab" href="#local-filehash" id="firstTab">Upload file</a></li>
+                <li><a data-toggle="tab" href="#remote-filehash">Link to file</a></li>
                 <li><a data-toggle="tab" href="#redirect">Redirect</a></li>
                 <li><a data-toggle="tab" href="#text">Text</a></li>
                 <li><a data-toggle="tab" href="#data-hash">Hash</a></li>
@@ -171,7 +171,8 @@
             <div class="tab-content">
                 <div id="local-filehash" class="tab-pane fade in active">
                     <div class="alert alert-info text-left">
-                        Select a file to calculate its hash (there is no limit imposed on a file type or size.)
+                        Calculate signature hash of the file from your computer right in your browser and publish it on blockchain.<Br>
+                        The file never leaves your computer. Best for private documents, contracts, agreements.
                     </div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Local file hash">
@@ -223,7 +224,9 @@
                 </div>
                 <div id="remote-filehash" class="tab-pane fade">
                     <div class="alert alert-info text-left">
-                        Enter a link to a remote file with a limit set to 50 MB (megabytes).
+                        Calculate signature hash of your hosted file online and publish it in blockchain. <br>
+                        Enter URL address into the form. File size is limited to 50MB (megabytes).<Br>
+                        Best for public documents and other file types.
                     </div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="File hash">
@@ -244,7 +247,7 @@
                     </form>
                 </div>
                 <div id="redirect" class="tab-pane fade">
-                    <div class="alert alert-info text-left">Please enter a valid URL.</div>
+                    <div class="alert alert-info text-left">PEnter destination URL and short immutable link will be generated and engraved into blockchain.</div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Redirect">
                         <div class="row">
@@ -257,7 +260,7 @@
                     </form>
                 </div>
                 <div id="text" class="tab-pane fade">
-                    <div class="alert alert-info text-left">The text entered below will be stored with its SHA256 hash in the blockchain.</div>
+                    <div class="alert alert-info text-left">The text entered below will be stored with SHA256 hash in the blockchain and visible by short code for everyone.</div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Text">
                         <div class="row">
@@ -271,7 +274,7 @@
                 </div>
                 <div id="data-hash" class="tab-pane fade">
                     <div class="alert alert-info text-left">
-                        Only SHA256 hash of the data entered below will be stored in the blockchain.
+                        Only SHA256 hash of the text data entered below will be stored in the blockchain. Use this option to create proof of text you want to keep private.
                     </div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Hash">
