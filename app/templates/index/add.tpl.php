@@ -11,9 +11,7 @@
             version: 1,
             type: "T"
         };
-        if($('#local-filehash').hasClass('active')){
-
-        }
+        var show = true;
         if($('#local-filehash').hasClass('active')){
             var filename = $('#local-filehash [name=filename]').val();
             if(filename){
@@ -25,6 +23,8 @@
                 if(description){
                     data.description = description;
                 }
+            }else{
+                show = false;
             }
         }
         if($('#remote-filehash').hasClass('active')){
@@ -86,6 +86,9 @@
             if(data.url){
                 result += '<br><small>Approximated</small>';
             }
+        }
+        if(!show){
+            result = '';
         }
         $('.chainy-limit:visible').html(result);
     }
