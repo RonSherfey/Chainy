@@ -1,6 +1,97 @@
 <?php
     $oCfg = \AmiLabs\DevKit\Application::getInstance()->getConfig();
 ?>
+<script>
+    var chainyLimit = <?php echo $oCfg->get('maxJsonSize', 4700) - 100; ?>;
+    var currentJsonSize = 0;
+
+    function updateLimit(){
+        var data = {
+            id: "CHAINY",
+            version: 1,
+            type: "T"
+        };
+        if($('#local-filehash').hasClass('active')){
+
+        }
+        if($('#local-filehash').hasClass('active')){
+            var filename = $('#local-filehash [name=filename]').val();
+            if(filename){
+                data.filename = filename;
+                data.filesize = $('#local-filehash [name=filesize]').val();;
+                data.hash = $('#local-filehash [name=hash]').val();
+                data.filetype = "image";
+                var description = $('#local-filehash [name=description]').val();
+                if(description){
+                    data.description = description;
+                }
+            }
+        }
+        if($('#remote-filehash').hasClass('active')){
+            var url = $('#remote-filehash [name=url]').val();
+            if(url){
+                data.url = url;
+                var parts = url.split('/');
+                data.filename = parts[parts.length-1];
+                data.filesize = '50000000';
+                data.hash = '0000000000000000000000000000000000000000000000000000000000000000';
+                data.filetype = "image";
+            }
+            var description = $('#remote-filehash [name=description]').val();
+            if(description){
+                data.description = description;
+            }
+        }
+        if($('#redirect').hasClass('active')){
+            var url = $('#redirect [name=url]').val();
+            if(url){
+                data.url = url;
+            }
+        }
+        if($('#text').hasClass('active')){
+            var description = $('#text [name=description]').val();
+            if(description){
+                data.description = description;
+                data.hash = '0000000000000000000000000000000000000000000000000000000000000000';
+            }
+        }
+        if($('#data-hash').hasClass('active')){
+            var description = $('#data-hash [name=description]').val();
+            if(description){
+                data.hash = '0000000000000000000000000000000000000000000000000000000000000000';
+            }
+        }
+        if($('#encrypted-text').hasClass('active')){
+            var enc = $('#enc-text').val();
+            if(enc){
+                var enc = $('#enc-text').val();
+                data.description = CryptoJS.AES.encrypt(enc, 'test').toString();
+                data.hash = '0000000000000000000000000000000000000000000000000000000000000000';
+            }
+        }
+
+        var used = JSON.stringify(data);
+        currentJsonSize = used.length;
+        var rest = chainyLimit - currentJsonSize;
+        if(rest < 0){
+            rest = '<span style="color:red;">0</span>';
+        }
+        var result = 'JSON used ' + currentJsonSize + ' bytes ';
+        if($('#publish:checked').length){
+            result = result + 'out of ' + chainyLimit + ' bytes limit, ' +  rest + ' bytes left';
+        }
+        if($('#remote-filehash').hasClass('active')){
+            if(data.url){
+                result += '<br><small>Approximated</small>';
+            }
+        }
+        $('.chainy-limit:visible').html(result);
+    }
+
+    setInterval(function(){
+        updateLimit();
+    }, 500);
+</script>
 <div class="t408__textwrapper t-width t-width_8">
     <div class="t408__uptitle t-uptitle t-uptitle_md" field="subtitle">
         <br /><br />AEON links + Proof of Existence + Files + Messages
@@ -224,7 +315,8 @@
                 <?php
                     if($oCfg->get('captcha', FALSE)):
                 ?>
-                <div style="padding-left: 15px; margin-top: -15px;">
+                <div style="padding-left: 15px; margin-top: -15px; padding-right: 15px;">
+                    <div class="chainy-limit text-right"></div>
                     <div class="row">
                         <div class="hidden-xs col-sm-4 col-md-2 col-header">&nbsp;</div>
                         <div class="col-xs-12 col-sm-8 col-md-10 text-left">
@@ -263,6 +355,17 @@ var isDapp = function(){
 }
 
 function submitAdd(){
+    var rest = chainyLimit - currentJsonSize;
+    if($('#remote-filehash').hasClass('active')){
+        rest += 80;
+    }
+    if($('#publish:checked').length){
+        if(rest < 0){
+            alert('JSON is too big to publish');
+            return;
+        }
+    }
+
     $('#captcha-err').text('');
     $('.trim-on-submit:visible').each(function(){
         // Trims spaces and blank lines
