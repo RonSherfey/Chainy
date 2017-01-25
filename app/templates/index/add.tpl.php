@@ -241,9 +241,7 @@
                     </form>
                 </div>
                 <div id="redirect" class="tab-pane fade">
-                    <div class="alert alert-info text-left">
-                        Please enter a valid URL. Protocol is required (http:// or https://).
-                    </div>
+                    <div class="alert alert-info text-left">Please enter a valid URL.</div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Redirect">
                         <div class="row">
