@@ -6,7 +6,7 @@
                 <h2 class="date-of-transaction animation-slideUp"><strong>Date of transaction:</strong> <br class="less500" /><span class="ts2date" data-ts="<?php if(isset($aTX['date'])): ?><?=$aTX['date']?><?php endif; ?>"></span></h2>
             </div>
         </section>
-        <!-- END Intro -->
+        <!-- END Intro --> 
 
         <?php if($aTX["type"] == 'L'): ?>
             <section class="site-content site-section site-slide-content">
@@ -16,6 +16,8 @@
                     <div class="row visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
                         <div class="col-sm-10 col-md-9 site-block">
                             <p>This page contains information about digitally signed file embedded in the Ethereum blockchain. Since transaction is confirmed this file is permanently certified and proven to exist.</p>
+                            <div class="grey-line"></div>
+                            <p><strong>Short code:</strong> <?=$code?></p>
                             <div class="grey-line"></div>
                             <p><strong>Hash amount  SHA256</strong></p>
                             <p><span class="long-hash"><?=$aTX['hash']?></span><input type="hidden" id="file-hash" value="<?=$aTX['hash']?>"></p>
@@ -61,7 +63,7 @@
                             <?php
                             /*
                                 <p class="promo-content">Look up this transaction on 3rd party services: <a href="http://coinsecrets.org/<?php if($aTX['block']): ?>?to=<?=($aTX['block'] + 1)?>.000000<?php endif; ?>">CoinSecrets</a> and <a href="http://blockchain.info/tx/<?=$aTX['tx']?>">Blockchain.info</a></p>
-                             */
+                            */
                             ?>
                         </div>
                         <div class="col-sm-2 col-md-offset-1 site-block">
@@ -210,6 +212,8 @@
                     <div class="row visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
                         <div class="col-sm-10 col-md-9 site-block">
                             <p>This page contains information about digitally signed text embedded in the Ethereum blockchain.</p>
+                            <div class="grey-line"></div>
+                            <p><strong>Short code:</strong> <?=$code?></p>
                             <?php if(isset($aTX['description']) && $aTX['description']): ?>
                                 <div class="grey-line"></div>
                                 <p><strong>Text:</strong></p>
@@ -371,6 +375,8 @@
                     <h2 class="site-heading"><strong>Redirect details</strong></h2>
                     <div class="row visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
                         <div class="col-sm-10 col-md-9 site-block">
+                            <div class="grey-line"></div>
+                            <p><strong>Short code:</strong> <?=$code?></p>
                             <?php if(isset($aTX['url'])): ?>
                                 <div class="grey-line"></div>
                                 <p><strong>Redirects to:</strong></p>

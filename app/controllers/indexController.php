@@ -53,6 +53,7 @@ class indexController extends Controller {
         }
         if(is_array($result) && isset($result['type'])){
             $this->oView->set('title', $code . ' details', true);
+            $this->oView->set('code', $code, true);
             switch($result['type']){
                 case TX::TX_TYPE_REDIRECT:
                     if(!isset($aParameters['noRedirect'])){
