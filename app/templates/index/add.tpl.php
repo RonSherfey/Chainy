@@ -247,7 +247,7 @@
                     </form>
                 </div>
                 <div id="redirect" class="tab-pane fade">
-                    <div class="alert alert-info text-left">PEnter destination URL and short immutable link will be generated and engraved into blockchain.</div>
+                    <div class="alert alert-info text-left">Enter destination URL and short immutable link will be generated and engraved into blockchain.</div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Redirect">
                         <div class="row">
