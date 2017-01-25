@@ -80,7 +80,7 @@
             if(rest <= 0){
                 result = '<span style="color:red;font-weight:bold;">' + rest + ' symbols left</span>';
             }
-            result += '<br><small>* JSON transaction data size is estimated.<br>To post larger size transaction use <a href="https://chainy.info/#how" target="_blank">this manual</a></small>.'
+            result += '<br><small>* JSON transaction data size is estimated.<br>To post larger size transaction use <a href="https://chainy.info/howto" target="_blank">this manual</a></small>.'
         }
         if($('#remote-filehash').hasClass('active')){
             if(data.url){
