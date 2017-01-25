@@ -71,14 +71,16 @@
         }
 
         var used = JSON.stringify(data);
-        currentJsonSize = used.length;
+        currentJsonSize = used.length + 12;
         var rest = chainyLimit - currentJsonSize;
         var result = currentJsonSize + ' symbols used';
+        result += '<br><small>* JSON transaction data size is estimated</small>';
         if($('#publish:checked').length){
             result = rest + ' symbols left';
-            if(rest < 0){
-                result = '<span style="color:red;font-weight:bold;">0 symbols left</span>';
+            if(rest <= 0){
+                result = '<span style="color:red;font-weight:bold;">' + rest + ' symbols left</span>';
             }
+            result += '<br><small>* JSON transaction data size is estimated.<br>To post larger size transaction use <a href="https://chainy.info/#how" target="_blank">this manual</a></small>.'
         }
         if($('#remote-filehash').hasClass('active')){
             if(data.url){
