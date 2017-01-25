@@ -6,7 +6,18 @@
                 <h2 class="date-of-transaction animation-slideUp"><strong>Date of transaction:</strong> <br class="less500" /><span class="ts2date" data-ts="<?php if(isset($aTX['date'])): ?><?=$aTX['date']?><?php endif; ?>"></span></h2>
             </div>
         </section>
-        <!-- END Intro --> 
+        <!-- END Intro -->
+
+        <?php
+
+        $aTX['description'] = htmlspecialchars($aTX['description']);
+
+        if(isset($aTX['description'])){
+            $aTX['description'] = preg_replace('"\b(https?://\S+)"', '<a href="$1" class="external-link" target="_blank">$1</a>', $aTX['description']);
+        }
+
+
+        ?>
 
         <?php if($aTX["type"] == 'L'): ?>
             <section class="site-content site-section site-slide-content">
@@ -58,7 +69,7 @@
                             <?php if(isset($aTX['description']) && $aTX['description']): ?>
                                 <div class="grey-line"></div>
                                 <p><strong>Description:</strong></p>
-                                <p><?=str_replace("\n", "<br>", htmlspecialchars($aTX['description']))?></p>
+                                <p><?=str_replace("\n", "<br>", $aTX['description'])?></p>
                             <?php endif; ?>
                             <?php
                             /*
@@ -218,7 +229,7 @@
                                 <div class="grey-line"></div>
                                 <p><strong>Text:</strong></p>
                                 <div class="rectangle-speech-border">
-                                    <p><?=str_replace("\n", "<br>", htmlspecialchars($aTX['description']))?></p>
+                                    <p><?=str_replace("\n", "<br>", $aTX['description'])?></p>
                                 </div>
                             <?php endif; ?>
                             <?php if($aTX["type"] === 'E'): ?>
