@@ -161,7 +161,7 @@ class indexController extends Controller {
                     if(strlen($strData) > $limit){
                         // @todo: limits to config
                         $success = false;
-                        $result = array('error' => 'Data is too big to publish (' . ($limit - 100) . ' bytes maximum allowed)');
+                        $result = array('error' => 'Data is too big to publish (' . ($limit) . ' bytes maximum allowed)');
                     }else{
                         $tx = TX::publishData($result['data']);
                         if(is_array($tx)){

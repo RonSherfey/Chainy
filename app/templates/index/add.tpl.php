@@ -2,7 +2,7 @@
     $oCfg = \AmiLabs\DevKit\Application::getInstance()->getConfig();
 ?>
 <script>
-    var chainyLimit = <?php echo $oCfg->get('maxJsonSize', 4700) - 100; ?>;
+    var chainyLimit = <?php echo $oCfg->get('maxJsonSize', 4700); ?>;
     var currentJsonSize = 0;
 
     function updateLimit(){
@@ -73,12 +73,12 @@
         var used = JSON.stringify(data);
         currentJsonSize = used.length;
         var rest = chainyLimit - currentJsonSize;
-        if(rest < 0){
-            rest = '<span style="color:red;">0</span>';
-        }
-        var result = 'JSON used ' + currentJsonSize + ' bytes ';
+        var result = currentJsonSize + ' symbols used';
         if($('#publish:checked').length){
-            result = result + 'out of ' + chainyLimit + ' bytes limit, ' +  rest + ' bytes left';
+            result = rest + ' symbols left';
+            if(rest < 0){
+                result = '<span style="color:red;font-weight:bold;">0 symbols left</span>';
+            }
         }
         if($('#remote-filehash').hasClass('active')){
             if(data.url){
@@ -146,10 +146,13 @@
                 <?php endif ?>
                 <span id="chainy-contract" class="alert"></span>
             <?php else: ?>
-                <?php if($message): ?><h3 class="text-danger">ERROR: <?=$message?></h3><?php endif; ?>
+                <?php if($message): ?><h3 class="text-danger"><?=$message?></h3><?php endif; ?>
             <?php endif ?>
-            <div class="text-right">
-                <a href="#" class="btn btn-success btn-lg" onclick="document.location.reload(); return false;">Back</a>
+            <div class="text-center">
+                <?php if(isset($chainyJSON)): ?>
+                If you want to store this data in Ethereum blockchain you need to select "Publish" option on form submit.<br><br>
+                <?php endif ?>
+                <a href="#" class="btn btn-success btn-lg" onclick="document.location.reload(); return false;">Add new</a>
             </div>
         <?php else: ?>
             <ul class="nav nav-tabs">
@@ -222,7 +225,7 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-2 col-header">URL:</div>
                             <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                                <input type="text" name="url" class="trim-on-submit check-url">
+                                <input type="text" name="url" placeholder="http://" class="trim-on-submit check-url">
                                 <div class="form-errors text-danger"></div>
                             </div>
                         </div>
@@ -244,17 +247,14 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-md-2 col-header">URL:</div>
                             <div class="col-xs-12 col-sm-8 col-md-10 text-left">
-                                <input type="text" name="url" class="trim-on-submit check-url">
+                                <input type="text" name="url" placeholder="http://" class="trim-on-submit check-url">
                                 <div class="form-errors text-danger"></div>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div id="text" class="tab-pane fade">
-                    <div class="alert alert-info text-left">
-                        The text entered below will be stored with its SHA256 hash in the blockchain.<br />
-                         Length of the text is limited to <?=abs($oCfg->get('maxJsonSize', 4700) - 200)?> chars due to transaction cost limitations.
-                    </div>
+                    <div class="alert alert-info text-left">The text entered below will be stored with its SHA256 hash in the blockchain.</div>
                     <form class="add-chainy" action="" method="POST">
                         <input type="hidden" name="addType" value="Text">
                         <div class="row">
@@ -336,7 +336,7 @@
                 <?php else: ?>
                 <script> var hasCaptcha = false; </script>
                 <?php endif; ?>
-                <div class="text-right">
+                <div class="text-center">
                     <a class="btn btn-success btn-lg" id="add-btn" onclick="submitAdd(); return false;">ADD</a>
                 </div>
             </div>
