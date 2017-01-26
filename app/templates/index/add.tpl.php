@@ -386,13 +386,6 @@ function submitAdd(){
             checked = false;
         }
     });
-    $('.check-description:visible').each(function(){
-        if(this.value && this.value.length > <?=abs($oCfg->get('maxJsonSize', 4700) - 200)?>){
-            $(this).addClass('has-error');
-            $(this).next('.form-errors').text('Text is too long').show();
-            checked = false;
-        }
-    });
     $('.check-empty:visible').each(function(){
         if(!this.value){
             $(this).addClass('has-error');
