@@ -100,6 +100,8 @@ class indexController extends Controller {
             }
         }
         if($oRequest->getMethod() === 'POST'){
+            $oLogger = Logger::get('add-chainy');
+            $oLogger->log('POST: ' . var_export($_POST, TRUE));
             if($this->getConfig()->get('captcha', FALSE)){
                 // Check Captcha
                 $recaptcha = $oRequest->get('g-recaptcha-response', FALSE, INPUT_POST);
@@ -109,6 +111,7 @@ class indexController extends Controller {
                     'response' => $recaptcha
                 ));
                 if(!is_array($res) || !isset($res['success']) || !$res['success']){
+                    $oLogger->log('INVALID CAPTCHA');
                     $_SESSION['add_result'] = array(
                         'success' => false,
                         'message' => "Invalid captcha"
@@ -177,7 +180,6 @@ class indexController extends Controller {
             $result['message'] = $message;
             $ipAddress = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'Unknown';
             $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'Unknown';
-            $oLogger = Logger::get('add-chainy');
             $oLogger->log('CREATE: ' . var_export($result, TRUE) . ' (IP=' . $ipAddress . ',referer=' . $referer . ')');
             $_SESSION['add_result'] = $result;
             header('Location: ?');
