@@ -8,16 +8,12 @@
         </section>
         <!-- END Intro -->
 
-        <?php
-
+<?php
+    if(isset($aTX['description'])){
         $aTX['description'] = htmlspecialchars($aTX['description']);
-
-        if(isset($aTX['description'])){
-            $aTX['description'] = preg_replace('"\b(https?://\S+)"', '<a href="$1" class="external-link" target="_blank">$1</a>', $aTX['description']);
-        }
-
-
-        ?>
+        $aTX['description'] = preg_replace('"\b(https?://\S+)"', '<a href="$1" class="external-link" target="_blank">$1</a>', $aTX['description']);
+    }
+?>
 
         <?php if($aTX["type"] == 'L'): ?>
             <section class="site-content site-section site-slide-content">
@@ -87,7 +83,33 @@
             <section class="site-content site-section" style="margin-top: 28px;">
                 <div class="container">
                     <div class="row store-items">
-                        <div id="verifier" class="col-md-8 visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
+                        <div class="col-md-6 visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
+                                <?php if(isset($aTX['url'])): ?>
+                                <a href="<?=$aTX['url']?>" target=_blank class="store-item">
+                                <?php else: ?>
+                                <a class="store-item">
+                                <?php endif; ?>
+                                <div class="store-item-info  text-center clearfix">
+                                    <span class="store-item-price themed-color">Signed file</span>
+                                    <div><strong>File name:</strong> <?php if(isset($aTX['filename']) && $aTX['filename']){ echo $aTX['filename']; } elseif(isset($aTX['url'])){ echo substr($aTX['url'], strrpos($aTX['url'], '/') + 1); }?></div>
+                                </div>
+                                <div class="store-item-icon">
+                                    <?php if(isset($aTX['url']) && ('image' === $aTX['filetype'])): ?>
+                                    <img src="<?=$aTX['url'];?>" style="max-width:200px; max-height: 100px;">
+                                    <?php else: ?>
+                                    <i class="fa fa-file<?=$aTX['filetype']?'-':''?><?=$aTX['filetype']?>-o themed-color-fire"></i>
+                                    <?php endif; ?>
+                                    <div class="store-item-price themed-color-dark" style="font-size:16px;"><?=$aTX['filesize']?></div>
+                                </div>
+                                <div class="store-item-info clearfix" style="word-break: break-all">
+                                    <?php if(isset($aTX['url'])): ?>
+                                    <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
+                                    <?php endif; ?>
+                                    <span class="text-muted">This link is saved with the file signature in the same blockchain transaction.</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div id="verifier" class="col-md-6 visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
                             <a href="javascript:void(0)" class="store-item">
                                 <div class="store-item-info  text-center clearfix">
                                     <span class="store-item-price themed-color">Verify saved file copy</span>
@@ -101,28 +123,6 @@
                                     <strong>Security note</strong><br>
                                     <span class="text-muted">Your file won't be uploaded.<br>
                                      All SHA256 hash calculations are performed right on your computer.</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4 visibility-none" data-toggle="animation-appear" data-animation-class="animation-fadeInQuick" data-element-offset="-100">
-                                <?php if(isset($aTX['url'])): ?>
-                                <a href="<?=$aTX['url']?>" target=_blank class="store-item">
-                                <?php else: ?>
-                                <a class="store-item">
-                                <?php endif; ?>
-                                <div class="store-item-info  text-center clearfix">
-                                    <span class="store-item-price themed-color">Signed file</span>
-                                    <div><strong>File name:</strong> <?php if(isset($aTX['filename']) && $aTX['filename']){ echo $aTX['filename']; } elseif(isset($aTX['url'])){ echo substr($aTX['url'], strrpos($aTX['url'], '/') + 1); }?></div>
-                                </div>
-                                <div class="store-item-icon">
-                                    <i class="fa fa-file<?=$aTX['filetype']?'-':''?><?=$aTX['filetype']?>-o themed-color-fire"></i>
-                                    <div class="store-item-price themed-color-dark" style="font-size:16px;"><?=$aTX['filesize']?></div>
-                                </div>
-                                <div class="store-item-info clearfix" style="word-break: break-all">
-                                    <?php if(isset($aTX['url'])): ?>
-                                    <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
-                                    <?php endif; ?>
-                                    <span class="text-muted">This link is saved with the file signature in the same blockchain transaction.</span>
                                 </div>
                             </a>
                         </div>
