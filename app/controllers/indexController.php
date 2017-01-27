@@ -161,9 +161,10 @@ class indexController extends Controller {
                 $oCfg = $this->getConfig();
                 if($oCfg->get('autopublish', FALSE) && $publish){
                     $strData = json_encode($result['data'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                    $oLogger->log('JSON: ' . $strData);
                     $limit = $oCfg->get('maxJsonSize', 4700);
                     if(strlen($strData) > $limit){
-                        // @todo: limits to config
+                        $oLogger->log('ERROR: Limit ' . $limit . ' > ' . strlen($strData));
                         $success = false;
                         $result = array('error' => 'Data is too big to publish (' . ($limit) . ' bytes maximum allowed)');
                     }else{
