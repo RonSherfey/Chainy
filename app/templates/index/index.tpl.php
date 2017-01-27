@@ -111,7 +111,7 @@
                                     <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
                                     <span class="text-muted">This link is saved with the file signature in the same blockchain transaction.</span>
                                     <?php else: ?>
-                                    <span class="text-muted">Signature of this file was calculated and stored in blockchain transaction.</span>
+                                    <span class="text-muted">Signature of this file was calculated and stored in the blockchain transaction.</span>
                                     <?php endif; ?>
                                 </div>
                             </a>

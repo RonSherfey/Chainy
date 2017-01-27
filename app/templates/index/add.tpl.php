@@ -82,11 +82,6 @@
             }
             result += '<br><small>* JSON transaction data size is estimated.<br>To post larger size transaction use <a href="https://chainy.info/howto" target="_blank">this manual</a></small>.'
         }
-        if($('#remote-filehash').hasClass('active')){
-            if(data.url){
-                result += '<br><small>Approximated</small>';
-            }
-        }
         if(!show){
             result = '';
         }

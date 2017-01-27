@@ -213,18 +213,23 @@ class TX extends \AmiLabs\CryptoKit\TX {
     public static function createHashLinkTransaction($url, $description = FALSE){
         set_time_limit(0);
         $tmpName = sys_get_temp_dir() . '/' . md5($url) . '.tmp';
+        $cookieFileName = sys_get_temp_dir() . '/chainy_cookie.tmp';
         $oCfg = Application::getInstance()->getConfig();
         $error = FALSE;
         // Download file from web
         // @todo: partial downloads of big files
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, TRUE);
         curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+        curl_setopt($ch, CURLOPT_COOKIESESSION, TRUE);
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFileName);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieFileName);
         $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
         if($size < 0){
             $data = curl_exec($ch);
