@@ -101,7 +101,7 @@
                                     <?php endif; ?>
                                     <div class="store-item-price themed-color-dark" style="font-size:16px;"><?=$aTX['filesize']?></div>
                                 </div>
-                                <div class="store-item-info clearfix" style="word-break: break-all">
+                                <div class="store-item-info clearfix" style="word-break: break-all; min-height: 100px;">
                                     <?php if(isset($aTX['url'])): ?>
                                     <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
                                     <?php endif; ?>
@@ -119,7 +119,7 @@
                                     <i class="fa fa-cloud-upload themed-color"></i>
 	                                <div style="font-size:16px;">Click or drag and drop file here</div>
                                 </div>
-                                <div class="store-item-info clearfix">
+                                <div class="store-item-info clearfix" style=" min-height: 100px;">
                                     <strong>Security note</strong><br>
                                     <span class="text-muted">Your file won't be uploaded.<br>
                                      All SHA256 hash calculations are performed right on your computer.</span>

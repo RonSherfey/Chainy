@@ -212,52 +212,50 @@ class TX extends \AmiLabs\CryptoKit\TX {
      */
     public static function createHashLinkTransaction($url, $description = FALSE){
         set_time_limit(0);
-        $oCache = Cache::get(md5($url));
+        $tmpName = sys_get_temp_dir() . '/' . md5($url) . '.tmp';
         $oCfg = Application::getInstance()->getConfig();
         $error = FALSE;
-        if(!$oCache->exists()){
-            // Download file from web
-            // @todo: partial downloads of big files
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-            curl_setopt($ch, CURLOPT_HEADER, TRUE);
-            curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-            $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
-            if($size < 0){
-                $data = curl_exec($ch);
-                $aMatches = array();
-                if(preg_match("/Content\-Length.*(\d+)\s/U", $data, $aMatches)){
-                    $size = (int)$aMatches[1];
-                }
+        // Download file from web
+        // @todo: partial downloads of big files
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, TRUE);
+        curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+        $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+        if($size < 0){
+            $data = curl_exec($ch);
+            $aMatches = array();
+            if(preg_match("/Content\-Length.*(\d+)\s/U", $data, $aMatches)){
+                $size = (int)$aMatches[1];
             }
-            $data = FALSE;
-            if(($size > 0) && ($size < self::MAX_FILE_SIZE)){
-                curl_setopt($ch, CURLOPT_HEADER, FALSE);
-                curl_setopt($ch, CURLOPT_NOBODY, FALSE);
-                $data = curl_exec($ch);
-                if(FALSE !== $data){
-                    $oCache->save($data);
-                }else{
-                    $error = 'Unable to download file';
-                }
-            }elseif($size < 0){
-                $error = 'File not found';
-            }else{
-                $error = 'File size ' . self::getFileSize($size) . ' exeeds maximum allowed ' . self::getFileSize(self::MAX_FILE_SIZE);
-            }
-            curl_close ($ch);
         }
+        $data = FALSE;
+        if(($size > 0) && ($size < self::MAX_FILE_SIZE)){
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            curl_setopt($ch, CURLOPT_NOBODY, FALSE);
+            $data = curl_exec($ch);
+            if(FALSE !== $data){
+                @file_put_contents($tmpName, $data);
+            }else{
+                $error = 'Unable to download file';
+            }
+        }elseif($size < 0){
+            $error = 'File not found';
+        }else{
+            $error = 'File size ' . self::getFileSize($size) . ' exeeds maximum allowed ' . self::getFileSize(self::MAX_FILE_SIZE);
+        }
+        curl_close ($ch);
         $result = FALSE;
-        if(!$error && $oCache->exists()){
+        if(!$error){
             $data = self::_getTxData(self::TX_TYPE_HASHLINK, array(
                 'url'       => $url,
-                'hash'      => hash_file('sha256', $oCache->getFilename()),
+                'hash'      => hash_file('sha256', $tmpName),
                 'filetype'  => self::getFileType($url),
-                'filesize'  => filesize($oCache->getFilename()),
+                'filesize'  => filesize($tmpName),
             ));
             if(FALSE !== $description){
                 $description = str_replace("\r", "" , $description);
@@ -271,7 +269,7 @@ class TX extends \AmiLabs\CryptoKit\TX {
         if($error){
             $result = array('error' => $error);
         }
-        $oCache->clear();
+        @unlink($tmpName);
         return $result;
     }
 
