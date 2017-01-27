@@ -6,6 +6,9 @@
     var currentJsonSize = 0;
 
     function updateLimit(){
+        function byteCount(s) {
+            return encodeURI(s).split(/%..|./).length - 1;
+        }
         var data = {
             id: "CHAINY",
             version: 1,
@@ -71,7 +74,7 @@
         }
 
         var used = JSON.stringify(data);
-        currentJsonSize = used.length + 12;
+        currentJsonSize = byteCount(used) + 12;
         var rest = chainyLimit - currentJsonSize;
         var result = currentJsonSize + ' symbols used';
         result += '<br><small>* JSON transaction data size is estimated</small>';
