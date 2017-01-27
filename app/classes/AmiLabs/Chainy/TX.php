@@ -302,7 +302,7 @@ class TX extends \AmiLabs\CryptoKit\TX {
         $result = FALSE;
         $oCfg = \AmiLabs\DevKit\Application::getInstance()->getConfig();
         $sender = (FALSE !== self::$sender) ? self::$sender : $oCfg->get('sender');
-        $tx = self::_callRPC("add", array($sender, json_encode($data, JSON_UNESCAPED_SLASHES)));
+        $tx = self::_callRPC("add", array($sender, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)));
         // Transaction hash length should be 66 bytes
         if(strlen($tx) == 66){
             $result = array('hash' => $tx);
