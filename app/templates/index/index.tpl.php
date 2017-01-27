@@ -109,8 +109,10 @@
                                 <div class="store-item-info clearfix" style="word-break: break-all; min-height: 100px;">
                                     <?php if(isset($aTX['url'])): ?>
                                     <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
-                                    <?php endif; ?>
                                     <span class="text-muted">This link is saved with the file signature in the same blockchain transaction.</span>
+                                    <?php else: ?>
+                                    <span class="text-muted">Signature of this file was calculated and stored in blockchain transaction.</span>
+                                    <?php endif; ?>
                                 </div>
                             </a>
                         </div>
