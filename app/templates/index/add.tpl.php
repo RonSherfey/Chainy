@@ -123,7 +123,7 @@
                 <?php endif ?>
                 <?php if(isset($hash)): ?>
                     <p>Transaction: <a href="https://<?php echo $oCfg->get('testnet', FALSE) ? 'testnet.' : ''; ?>etherscan.io/tx/<?php echo $hash ?>" target="_blank"><?php echo $hash ?></a></p>
-                    <p>Shortlink: <span id="shortlink"><i class="fa fa-spinner fa-spin"></i> please wait...</span></p>
+                    <p>Shortlink: <span id="shortlink"><i class="fa fa-spinner fa-spin"></i> please wait, broadcasting transaction into blockchain...</span></p>
                     <script>
                         var checkTm;
                         var getShort = function(){
