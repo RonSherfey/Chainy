@@ -93,7 +93,7 @@ class indexController extends Controller {
                 $this->getView()->set('hash', $result['hash']);
             }
             if(isset($result['data'])){
-                $this->getView()->set('chainyJSON', json_encode($result['data'], JSON_UNESCAPED_SLASHES));
+                $this->getView()->set('chainyJSON', json_encode($result['data'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
             }
             if(isset($result['transaction']) && !$result['mist']){
                 $this->getView()->set('chainyTransaction', json_encode($result['transaction']));
@@ -160,7 +160,7 @@ class indexController extends Controller {
             if($success && !$result['mist']){
                 $oCfg = $this->getConfig();
                 if($oCfg->get('autopublish', FALSE) && $publish){
-                    $strData = json_encode($result['data'], JSON_UNESCAPED_SLASHES);
+                    $strData = json_encode($result['data'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
                     $limit = $oCfg->get('maxJsonSize', 4700);
                     if(strlen($strData) > $limit){
                         // @todo: limits to config

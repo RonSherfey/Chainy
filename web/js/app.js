@@ -222,7 +222,7 @@ var App = function() {
         var text = $('#checkhash-text').val();
         // Trimming was added on ts 1484729572
         if(parseInt($(".ts2date").attr("data-ts")) > 1484729572){
-            text = text.replace(/^\s*[\r\n]/gm, "").replace(/\s*[\r\n]$/, '').replace(/^\s+/, '').replace(/\s+$/, '');
+            text = text.replace(/^\s*[\r\n]/, "").replace(/\s*[\r\n]$/, '').replace(/^\s+/, '').replace(/\s+$/, '');
         }
 
         var hash = CryptoJS.SHA256(text).toString();
