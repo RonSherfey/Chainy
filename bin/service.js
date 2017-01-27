@@ -47,6 +47,7 @@ Chainy = {
         var isSystem = (from === systemSender);
         var result = {};
         try {
+            var hex = new Buffer(data, 'utf8').toString("hex");
             var rawTx = {
                 from: from,
                 to: chainyConfig.contract,
@@ -54,7 +55,7 @@ Chainy = {
                 gasPrice: '0x' + web3.eth.gasPrice.toString(16),
                 gasLimit: chainyConfig.gasLimit,
                 value: isSystem ? '0x00' : ('0x' + (3000000).toString(16)),
-                data: chainyConfig.cmd + "20".padLeft(64) + data.length.toString(16).padLeft(64) + new Buffer(data).toString("hex")
+                data: chainyConfig.cmd + "20".padLeft(64) + (hex.length/2).toString(16).padLeft(64) + hex
             };
             var eTx = new Tx(rawTx);
             result = eTx.serialize().toString('hex');
@@ -151,7 +152,9 @@ Chainy = {
                                 var log = receipt.logs[j];
                                 if(chainyConfig.topic === log.topics[0]){
                                     var data = log.data.slice(192).replace(/0+$/, '');
+                                    console.log('Data: ' + data);
                                     var link = new Buffer(data, 'hex').toString();
+                                    console.log('Link: ' + link);
                                     if(link && link.length && (link.length > code.length) && (code === link.slice(-code.length))){
                                         callback(null, {hash: tx.hash, sender: tx.from});
                                         return;
@@ -163,6 +166,7 @@ Chainy = {
                 }
             }
         }catch(e){
+            console.log('Err: ' + e.message);
             callback(e.message, null);
             return;
         }
