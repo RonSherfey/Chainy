@@ -93,14 +93,19 @@
                                     <span class="store-item-price themed-color">Signed file</span>
                                     <div><strong>File name:</strong> <?php if(isset($aTX['filename']) && $aTX['filename']){ echo $aTX['filename']; } elseif(isset($aTX['url'])){ echo substr($aTX['url'], strrpos($aTX['url'], '/') + 1); }?></div>
                                 </div>
-                                <div class="store-item-icon">
-                                    <?php if(isset($aTX['url']) && ('image' === $aTX['filetype'])): ?>
-                                    <img src="<?=$aTX['url'];?>" style="max-width:200px; max-height: 100px;">
-                                    <?php else: ?>
+                                <?php if(isset($aTX['url']) && ('image' === $aTX['filetype'])): ?>
+                                <div class="store-item-icon" style="min-height:240px;padding-top:10px;padding-bottom:0px;">
+                                    <table style="min-height:200px;width:100%;" cellspacing="0" cellpadding="0" border="0"><tr><td valign="middle" style="text-align:center;">
+                                        <img src="<?=$aTX['url'];?>" style="max-width:200px; max-height:200px;">
+                                        <div class="store-item-price themed-color-dark" style="position:absolute;width:100%;padding-top:5px;font-size:16px;left:0px;"><?=$aTX['filesize']?></div>
+                                    </td></tr></table>
+                                </div>
+                                <?php else: ?>
+                                <div class="store-item-icon" style="min-height: 240px;">
                                     <i class="fa fa-file<?=$aTX['filetype']?'-':''?><?=$aTX['filetype']?>-o themed-color-fire"></i>
-                                    <?php endif; ?>
                                     <div class="store-item-price themed-color-dark" style="font-size:16px;"><?=$aTX['filesize']?></div>
                                 </div>
+                                <?php endif; ?>
                                 <div class="store-item-info clearfix" style="word-break: break-all; min-height: 100px;">
                                     <?php if(isset($aTX['url'])): ?>
                                     <strong>Link:&nbsp;</strong><?=$aTX['url']?><br>
